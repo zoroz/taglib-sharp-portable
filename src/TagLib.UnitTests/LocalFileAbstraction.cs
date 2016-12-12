@@ -19,10 +19,7 @@ namespace TagLib.Tests
 
         public void CloseStream(Stream stream)
         {
-            if (stream != null)
-            {
-                stream.Close();
-            }
+            stream?.Dispose();
         }
     }
 }

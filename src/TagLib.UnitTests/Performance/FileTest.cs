@@ -1,12 +1,11 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace TagLib.Tests.Performance
 {
-    [TestClass]
     public class FileTest
     {
-        [TestMethod]
+        [Fact]
         public void CreateM4A()
         {
             try
@@ -33,7 +32,7 @@ namespace TagLib.Tests.Performance
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void CreateOgg()
         {
             try

@@ -1,122 +1,120 @@
 ﻿using System;
-using System.Security.Cryptography;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace TagLib.Tests.Collections
 {
-    [TestClass]
     public class ByteVectorTest
     {
         private const string TEST_INPUT = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private static readonly ByteVector TestVector = ByteVector.FromString(TEST_INPUT, StringType.UTF8);
 
-        [TestMethod]
+        [Fact]
         public void Length()
         {
-            Assert.AreEqual(TEST_INPUT.Length, TestVector.Count);
+            Assert.Equal(TEST_INPUT.Length, TestVector.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void StartsWith()
         {
-            Assert.IsTrue(TestVector.StartsWith("ABCDE"));
-            Assert.IsFalse(TestVector.StartsWith("NOOP"));
+            Assert.True(TestVector.StartsWith("ABCDE"));
+            Assert.False(TestVector.StartsWith("NOOP"));
         }
 
-        [TestMethod]
+        [Fact]
         public void EndsWith()
         {
-            Assert.IsTrue(TestVector.EndsWith("UVWXYZ"));
-            Assert.IsFalse(TestVector.EndsWith("NOOP"));
+            Assert.True(TestVector.EndsWith("UVWXYZ"));
+            Assert.False(TestVector.EndsWith("NOOP"));
         }
 
-        [TestMethod]
+        [Fact]
         public void ContainsAt()
         {
-            Assert.IsTrue(TestVector.ContainsAt("JKLMNO", 9));
-            Assert.IsFalse(TestVector.ContainsAt("NOOP", 30));
+            Assert.True(TestVector.ContainsAt("JKLMNO", 9));
+            Assert.False(TestVector.ContainsAt("NOOP", 30));
         }
 
-        [TestMethod]
+        [Fact]
         public void Find()
         {
-            Assert.AreEqual(17, TestVector.Find("RSTUV"));
-            Assert.AreEqual(-1, TestVector.Find("NOOP"));
+            Assert.Equal(17, TestVector.Find("RSTUV"));
+            Assert.Equal(-1, TestVector.Find("NOOP"));
         }
 
-        [TestMethod]
+        [Fact]
         public void RFind()
         {
-            Assert.AreEqual(6, TestVector.RFind("GHIJ"));
-            Assert.AreEqual(-1, TestVector.RFind("NOOP"));
+            Assert.Equal(6, TestVector.RFind("GHIJ"));
+            Assert.Equal(-1, TestVector.RFind("NOOP"));
         }
 
-        [TestMethod]
+        [Fact]
         public void Mid()
         {
-            Assert.AreEqual(ByteVector.FromString("KLMNOPQRSTUVWXYZ", StringType.UTF8), TestVector.Mid(10));
-            Assert.AreEqual(ByteVector.FromString("PQRSTU", StringType.UTF8), TestVector.Mid(15, 6));
+            Assert.Equal(ByteVector.FromString("KLMNOPQRSTUVWXYZ", StringType.UTF8), TestVector.Mid(10));
+            Assert.Equal(ByteVector.FromString("PQRSTU", StringType.UTF8), TestVector.Mid(15, 6));
         }
 
-        [TestMethod]
+        [Fact]
         public void CopyResize()
         {
             ByteVector a = new ByteVector(TestVector);
             ByteVector b = ByteVector.FromString("ABCDEFGHIJKL", StringType.UTF8);
             a.Resize(12);
 
-            Assert.AreEqual(b, a);
-            Assert.AreEqual(b.ToString(), a.ToString());
-            Assert.IsFalse(a.Count == TestVector.Count);
+            Assert.Equal(b, a);
+            Assert.Equal(b.ToString(), a.ToString());
+            Assert.False(a.Count == TestVector.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void Int()
         {
-            Assert.AreEqual(Int32.MaxValue, ByteVector.FromInt(Int32.MaxValue).ToInt());
-            Assert.AreEqual(Int32.MinValue, ByteVector.FromInt(Int32.MinValue).ToInt());
-            Assert.AreEqual(0, ByteVector.FromInt(0).ToInt());
-            Assert.AreEqual(30292, ByteVector.FromInt(30292).ToInt());
-            Assert.AreEqual(-30292, ByteVector.FromInt(-30292).ToInt());
-            Assert.AreEqual(-1, ByteVector.FromInt(-1).ToInt());
+            Assert.Equal(Int32.MaxValue, ByteVector.FromInt(Int32.MaxValue).ToInt());
+            Assert.Equal(Int32.MinValue, ByteVector.FromInt(Int32.MinValue).ToInt());
+            Assert.Equal(0, ByteVector.FromInt(0).ToInt());
+            Assert.Equal(30292, ByteVector.FromInt(30292).ToInt());
+            Assert.Equal(-30292, ByteVector.FromInt(-30292).ToInt());
+            Assert.Equal(-1, ByteVector.FromInt(-1).ToInt());
         }
 
-        [TestMethod]
+        [Fact]
         public void UInt()
         {
-            Assert.AreEqual(UInt32.MaxValue, ByteVector.FromUInt(UInt32.MaxValue).ToUInt());
-            Assert.AreEqual(UInt32.MinValue, ByteVector.FromUInt(UInt32.MinValue).ToUInt());
-            Assert.AreEqual((uint)0, ByteVector.FromUInt(0).ToUInt());
-            Assert.AreEqual((uint)30292, ByteVector.FromUInt(30292).ToUInt());
+            Assert.Equal(UInt32.MaxValue, ByteVector.FromUInt(UInt32.MaxValue).ToUInt());
+            Assert.Equal(UInt32.MinValue, ByteVector.FromUInt(UInt32.MinValue).ToUInt());
+            Assert.Equal((uint)0, ByteVector.FromUInt(0).ToUInt());
+            Assert.Equal((uint)30292, ByteVector.FromUInt(30292).ToUInt());
         }
 
-        [TestMethod]
+        [Fact]
         public void Long()
         {
-            Assert.AreEqual(UInt64.MaxValue, ByteVector.FromULong(UInt64.MaxValue).ToULong());
-            Assert.AreEqual(UInt64.MinValue, ByteVector.FromULong(UInt64.MinValue).ToULong());
-            Assert.AreEqual((ulong)0, ByteVector.FromULong(0).ToULong());
-            Assert.AreEqual((ulong)30292, ByteVector.FromULong(30292).ToULong());
+            Assert.Equal(UInt64.MaxValue, ByteVector.FromULong(UInt64.MaxValue).ToULong());
+            Assert.Equal(UInt64.MinValue, ByteVector.FromULong(UInt64.MinValue).ToULong());
+            Assert.Equal((ulong)0, ByteVector.FromULong(0).ToULong());
+            Assert.Equal((ulong)30292, ByteVector.FromULong(30292).ToULong());
         }
 
-        [TestMethod]
+        [Fact]
         public void Short()
         {
-            Assert.AreEqual(UInt16.MaxValue, ByteVector.FromUShort(UInt16.MaxValue).ToUShort());
-            Assert.AreEqual(UInt16.MinValue, ByteVector.FromUShort(UInt16.MinValue).ToUShort());
-            Assert.AreEqual(0, ByteVector.FromUShort(0).ToUShort());
-            Assert.AreEqual(8009, ByteVector.FromUShort(8009).ToUShort());
+            Assert.Equal(UInt16.MaxValue, ByteVector.FromUShort(UInt16.MaxValue).ToUShort());
+            Assert.Equal(UInt16.MinValue, ByteVector.FromUShort(UInt16.MinValue).ToUShort());
+            Assert.Equal(0, ByteVector.FromUShort(0).ToUShort());
+            Assert.Equal(8009, ByteVector.FromUShort(8009).ToUShort());
         }
 
-        //[TestMethod]
+        //[Fact]
         //public void FromUri()
         //{
         //    ByteVector vector = ByteVector.FromPath("samples/vector.bin");
-        //    Assert.AreEqual(3282169185, vector.Checksum);
-        //    Assert.AreEqual("1aaa46c484d70c7c80510a5f99e7805d", MD5Hash(vector.Data));
+        //    Assert.Equal(3282169185, vector.Checksum);
+        //    Assert.Equal("1aaa46c484d70c7c80510a5f99e7805d", MD5Hash(vector.Data));
         //}
 
-        [TestMethod]
+        [Fact]
         public void OperatorAdd()
         {
             using (new CodeTimer("Operator Add"))
@@ -138,7 +136,7 @@ namespace TagLib.Tests.Collections
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void CommentsFrameError()
         {
             // http://bugzilla.gnome.org/show_bug.cgi?id=582735
@@ -149,7 +147,7 @@ namespace TagLib.Tests.Collections
             var encoding = (StringType)vector[0];
             //var language = vector.ToString (StringType.Latin1, 1, 3);
             var split = vector.ToStrings(encoding, 4, 3);
-            Assert.AreEqual(2, split.Length);
+            Assert.Equal(2, split.Length);
         }
 
 /*

@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace TagLib.Tests.FileFormats
 {
@@ -7,8 +7,8 @@ namespace TagLib.Tests.FileFormats
     {
         public static void ReadAudioProperties (File file)
         {
-            Assert.AreEqual(44100, file.Properties.AudioSampleRate);
-            Assert.AreEqual(5, file.Properties.Duration.Seconds);
+            Assert.Equal(44100, file.Properties.AudioSampleRate);
+            Assert.Equal(5, file.Properties.Duration.Seconds);
         }
         
         public static void WriteStandardTags (string sampleFile, string tmpFile)
@@ -49,23 +49,23 @@ namespace TagLib.Tests.FileFormats
 
         private static void CheckTags (Tag tag)
         {
-            Assert.AreEqual ("TEST album", tag.Album);
-            Assert.AreEqual ("TEST artist 1; TEST artist 2", tag.JoinedAlbumArtists);
-            Assert.AreEqual (120, tag.BeatsPerMinute);
-            Assert.AreEqual ("TEST comment", tag.Comment);
-            Assert.AreEqual ("TEST composer 1; TEST composer 2", tag.JoinedComposers);
-            Assert.AreEqual ("TEST conductor", tag.Conductor);
-            Assert.AreEqual ("TEST copyright", tag.Copyright);
-            Assert.AreEqual (100, tag.Disc);
-            Assert.AreEqual (101, tag.DiscCount);
-            Assert.AreEqual ("TEST genre 1; TEST genre 2", tag.JoinedGenres);
-            Assert.AreEqual ("TEST grouping", tag.Grouping);
-            Assert.AreEqual ("TEST lyrics 1\r\nTEST lyrics 2", tag.Lyrics);
-            Assert.AreEqual ("TEST performer 1; TEST performer 2", tag.JoinedPerformers);
-            Assert.AreEqual ("TEST title", tag.Title);
-            Assert.AreEqual (98, tag.Track);
-            Assert.AreEqual (99, tag.TrackCount);
-            Assert.AreEqual (1999, tag.Year);
+            Assert.Equal ("TEST album", tag.Album);
+            Assert.Equal ("TEST artist 1; TEST artist 2", tag.JoinedAlbumArtists);
+            Assert.Equal (120, (int)tag.BeatsPerMinute);
+            Assert.Equal ("TEST comment", tag.Comment);
+            Assert.Equal ("TEST composer 1; TEST composer 2", tag.JoinedComposers);
+            Assert.Equal ("TEST conductor", tag.Conductor);
+            Assert.Equal ("TEST copyright", tag.Copyright);
+            Assert.Equal (100, (int)tag.Disc);
+            Assert.Equal (101, (int)tag.DiscCount);
+            Assert.Equal ("TEST genre 1; TEST genre 2", tag.JoinedGenres);
+            Assert.Equal ("TEST grouping", tag.Grouping);
+            Assert.Equal ("TEST lyrics 1\r\nTEST lyrics 2", tag.Lyrics);
+            Assert.Equal ("TEST performer 1; TEST performer 2", tag.JoinedPerformers);
+            Assert.Equal ("TEST title", tag.Title);
+            Assert.Equal (98, (int)tag.Track);
+            Assert.Equal (99, (int)tag.TrackCount);
+            Assert.Equal (1999, (int)tag.Year);
         }
         
         public static void TestCorruptionResistance (string path)

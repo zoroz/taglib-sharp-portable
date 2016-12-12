@@ -178,3 +178,8 @@ FakesAssemblies/
 nuget/publish.bat
 /src/TagLib.Tests/samples/Folder.jpg
 /src/TagLib.Tests/samples/AlbumArtSmall.jpg
+/src/.vs
+/src/TagLib.Core/project.lock.json
+/src/TagLib.UnitTests/samples/tmpwrite_v2_only.mp3
+/src/TagLib.UnitTests/samples/tmpwrite.wma
+/src/TagLib.UnitTests/project.lock.json

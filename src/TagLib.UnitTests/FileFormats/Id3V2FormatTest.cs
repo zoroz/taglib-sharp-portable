@@ -1,8 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 
 namespace TagLib.Tests.FileFormats
 {
-    [TestClass]
     public class Id3V2FormatTest : IFormatTest
     {
         private const string SAMPLE_FILE = "samples/sample_v2_only.mp3";
@@ -11,28 +10,27 @@ namespace TagLib.Tests.FileFormats
         private const string EXT_HEADER_FILE = "samples/sample_v2_3_ext_header.mp3";
         private File _file;
 
-        [TestInitialize]
-        public void Init()
+        public Id3V2FormatTest()
         {
             _file = File.Create(new LocalFileAbstraction(SAMPLE_FILE));
         }
 
-        [TestMethod]
+        [Fact]
         public void ReadAudioProperties()
         {
-            Assert.AreEqual(44100, _file.Properties.AudioSampleRate);
-            Assert.AreEqual(1, _file.Properties.Duration.Seconds);
+            Assert.Equal(44100, _file.Properties.AudioSampleRate);
+            Assert.Equal(1, _file.Properties.Duration.Seconds);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestExtendedHeaderSize()
         {
             // bgo#604488
             var file = File.Create(new LocalFileAbstraction(EXT_HEADER_FILE));
-            Assert.AreEqual("Title v2", file.Tag.Title);
+            Assert.Equal("Title v2", file.Tag.Title);
         }
 
-        [TestMethod] // http://bugzilla.gnome.org/show_bug.cgi?id=558123
+        [Fact] // http://bugzilla.gnome.org/show_bug.cgi?id=558123
         public void TestTruncateOnNull()
         {
             if (System.IO.File.Exists(TMP_FILE))
@@ -43,23 +41,23 @@ namespace TagLib.Tests.FileFormats
             System.IO.File.Copy(CORRUPT_FILE, TMP_FILE);
             File tmp = File.Create(new LocalFileAbstraction(TMP_FILE));
 
-            Assert.AreEqual("T", tmp.Tag.Title);
+            Assert.Equal("T", tmp.Tag.Title);
         }
 
-        [TestMethod]
+        [Fact]
         public void ReadTags()
         {
-            Assert.AreEqual("MP3 album", _file.Tag.Album);
-            Assert.AreEqual("MP3 artist", _file.Tag.FirstPerformer);
-            Assert.AreEqual("MP3 comment", _file.Tag.Comment);
-            Assert.AreEqual("Acid Punk", _file.Tag.FirstGenre);
-            Assert.AreEqual("MP3 title", _file.Tag.Title);
-            Assert.AreEqual((uint)6, _file.Tag.Track);
-            Assert.AreEqual((uint)7, _file.Tag.TrackCount);
-            Assert.AreEqual((uint)1234, _file.Tag.Year);
+            Assert.Equal("MP3 album", _file.Tag.Album);
+            Assert.Equal("MP3 artist", _file.Tag.FirstPerformer);
+            Assert.Equal("MP3 comment", _file.Tag.Comment);
+            Assert.Equal("Acid Punk", _file.Tag.FirstGenre);
+            Assert.Equal("MP3 title", _file.Tag.Title);
+            Assert.Equal((uint)6, _file.Tag.Track);
+            Assert.Equal((uint)7, _file.Tag.TrackCount);
+            Assert.Equal((uint)1234, _file.Tag.Year);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestCorruptionResistance()
         {
             
