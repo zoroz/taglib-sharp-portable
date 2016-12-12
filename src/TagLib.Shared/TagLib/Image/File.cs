@@ -197,12 +197,9 @@ namespace TagLib.Image
 			EnsureAvailableTags ();
 			var from_tag = file.ImageTag;
 			var to_tag = ImageTag;
-#if PORTABLE
-            foreach (var prop in typeof (TagLib.Image.ImageTag).GetTypeInfo().DeclaredProperties) {
-#else
-			foreach (var prop in typeof (TagLib.Image.ImageTag).GetProperties()) {
-#endif
-				if (!prop.CanWrite || prop.Name == "TagTypes")
+            foreach (var prop in typeof(TagLib.Image.ImageTag).GetTypeInfo().DeclaredProperties)
+            {
+                if (!prop.CanWrite || prop.Name == "TagTypes")
 					continue;
 
 				var value = prop.GetValue (from_tag, null);
